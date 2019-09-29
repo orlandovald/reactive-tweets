@@ -1,0 +1,14 @@
+plugins {
+    id 'java-library'
+}
+
+sourceCompatibility = '1.8'
+
+dependencies {
+    api 'com.twitter:hbc-core:2.2.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.12'
+    implementation 'io.projectreactor:reactor-core:3.2.12.RELEASE'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.9.10'
+
+    testCompile 'junit:junit:4.12'
+}
