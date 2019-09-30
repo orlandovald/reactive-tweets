@@ -18,12 +18,14 @@ import static java.util.stream.Collectors.joining;
 public class TwitterCommand implements ApplicationRunner {
 
     private final OAuth1SignatureUtil oAuth;
+    private final TweetRepository repo;
 
     public TwitterCommand(
             @Value("${TWITTER_CONSUMER_KEY}") String consumerKey,
             @Value("${TWITTER_CONSUMER_SECRET}") String consumerSecret,
             @Value("${TWITTER_ACCESS_TOKEN}") String accessToken,
-            @Value("${TWITTER_ACCESS_TOKEN_SECRET}") String accessTokenSecret) {
+            @Value("${TWITTER_ACCESS_TOKEN_SECRET}") String accessTokenSecret, TweetRepository repo) {
+        this.repo = repo;
         this.oAuth = new OAuth1SignatureUtil(accessToken, accessTokenSecret, consumerKey, consumerSecret);
     }
 
@@ -50,7 +52,7 @@ public class TwitterCommand implements ApplicationRunner {
                 })
                 .bodyToFlux(Tweet.class);
 
-        tweets.subscribe(System.out::println);
+        repo.saveAll(tweets).log().subscribe();
 
     }
 
