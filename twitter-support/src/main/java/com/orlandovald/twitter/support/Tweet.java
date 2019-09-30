@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Tweet {
 
-    private Long id;
+    private String id;
 
     @JsonProperty("created_at")
     private String createdAt;
@@ -32,11 +32,11 @@ public class Tweet {
     @JsonProperty("user")
     private User user;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
