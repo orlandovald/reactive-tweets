@@ -1,3 +1,4 @@
 rootProject.name = 'reactive-tweets'
 include 'twitter-support'
 include 'spring-twitter-consumer'
+include 'spring-twitter-api'
