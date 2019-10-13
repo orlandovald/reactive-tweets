@@ -3,7 +3,7 @@
     <div class="row center grey lighten-5" style="margin-bottom:20px;">
       <div class="s12">
         <span class="title">Reactive Tweets</span><br>
-        Tweet with <code>#allthingsopen</code>
+        Tweet with <code>#AllThingsOpen</code>
       </div>
     </div>
     <div class="container">
@@ -39,7 +39,7 @@ export default {
         }
     },
     connectToStream: function() {
-      let es = new EventSource("http://localhost:9080/api/tweets");
+      let es = new EventSource(process.env.VUE_APP_TWITTER_API_URL);
 
       es.onmessage = (event) => {
         let data = JSON.parse(event.data);
