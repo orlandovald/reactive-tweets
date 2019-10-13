@@ -1,28 +1,75 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <div class="row center grey lighten-5" style="margin-bottom:20px;">
+      <div class="s12">
+        <span class="title">Reactive Tweets</span><br>
+        Tweet with <code>#allthingsopen</code>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col s6 offset-s3">
+            <feed :tweets="tweets" />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Feed from "./components/Feed.vue";
+import Vue from 'vue'
 
 export default {
   name: "app",
   components: {
-    HelloWorld
-  }
+    Feed
+  },
+  data() {
+    return { 
+      tweets: []
+    }
+  },
+  methods: {
+    addTweet: function(data) {
+        if(this.tweets === undefined || this.tweets.length == 0) {
+          this.tweets = [data];
+        } else {
+          this.tweets.unshift(data);
+        }
+    },
+    connectToStream: function() {
+      let es = new EventSource("http://localhost:9080/api/tweets");
+
+      es.onmessage = (event) => {
+        let data = JSON.parse(event.data);
+        this.addTweet(data);
+      };
+    },
+  },
+  created() {
+    this.connectToStream();
+  },
 };
 </script>
 
 <style>
-#app {
+.title {
+  padding: 30px;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  font-weight: bold;
+  font-size: 3.5rem;
+
+}
+#app {
+  /* font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50; */
+  /* margin-top: 60px; */
 }
 </style>
